@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Local Storage</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+    </head>
+    <body>
+        <h1>Local Storage</h1>
+        <h3>Result</h3>
+        <div id="result"></div>
+        <script>
+// Check browser support
+            if (typeof (Storage) !== "undefined") {
+                // Store
+                localStorage.setItem("lastname", "Downing");
+                // Retrieve
+                document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+            } else {
+                document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+            }
+        </script>
+
+        <h2>Local Storage to track click counter</h2>
+        <script>
+            function clickCounter() {
+                if (typeof (Storage) !== "undefined") {
+                    if (localStorage.clickcount) {
+                        localStorage.clickcount = Number(localStorage.clickcount) + 1;
+                    } else {
+                        localStorage.clickcount = 1;
+                    }
+                    document.getElementById("result1").innerHTML = "You have clicked the button " + localStorage.clickcount + " time(s).";
+                } else {
+                    document.getElementById("result1").innerHTML = "Sorry, your browser does not support web storage...";
+                }
+            }
+        </script>
+
+        <p><button onclick="clickCounter()" type="button">Click me!</button></p>
+        <div id="result1"></div>
+        <p>Click the button to see the counter increase.</p>
+        <p>Close the browser tab (or window), and try again, and the counter will continue to count (is not reset).</p>
+
+        <h2>Array Storage</h2>
+        <p>This example you will see in your developer tools under storage.</p>
+        <p>You can add names followed by a comma and click add button to add them.</p>
+        <div id="result"></div>
+        <button onclick="reloadd()">Reload</button>
+        <button onclick="clearF()">Clear</button>
+        <input id="valoare" />
+        <button id="adauga" onclick="adauga()">+</button>
+        <button onclick="nrElemente()">ElemNr?</button>
+
+        <script type="text/javascript">
+            var array1 = localStorage.getItem("array1");
+            array1 = (array1) ? JSON.parse(array1) : [];
+
+            var two = "kes";
+            document.getElementById("result").innerHTML = localStorage.getItem("array1");
+
+            function clearF() {
+                window.localStorage.clear();
+                location.reload();
+            }
+            function adauga() {
+                var x = document.getElementById("valoare").value;
+                array1.push(x);
+                localStorage.setItem("array1", JSON.stringify(array1));
+                document.getElementById("result").innerHTML = localStorage.getItem("array1");
+            }
+            function reloadd() {
+                location.reload();
+            }
+            function nrElemente() {
+                alert(localStorage.length);
+            }
+        </script>
+
+
+        <h2>Trying to store object through Console log</h2>
+        <p>Using stringify and parse to get it to store properly.</p>
+        <script>
+            var car = {};
+            car.wheels = 4;
+            car.doors = 2;
+            car.sound = 'vroom';
+            car.name = 'Lightning McQueen';
+            console.log(car);
+            localStorage.setItem('car', JSON.stringify(car));
+            console.log(JSON.parse(localStorage.getItem('car')));
+        </script>
+
+    </body>
+</html>
